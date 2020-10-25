@@ -57,7 +57,7 @@ def newprofile(request):
 
   return render(request, 'profile/newprofile.html',{'form':form,'profile':profile})
 
-  @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def myprojects(request):
   id = request.user.id
   profile = Profile.objects.get(user=id)
