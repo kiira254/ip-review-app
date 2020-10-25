@@ -73,9 +73,11 @@ def myprojects(request):
 
 @login_required(login_url='/accounts/login/')
 def home(request):
+
   id = request.user.id
   profile = Profile.objects.get(user=id)
-  return render(request, 'index.html', {'profile': profile})
+  projects = Project.objects.all().order_by('-pub_date')
+  return render(request, 'index.html', {'projects': projects,'profile': profile})
 
 
 @login_required(login_url='/accounts/login/')
