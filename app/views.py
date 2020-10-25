@@ -4,10 +4,12 @@ import datetime as dt
 from .models import Profile
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm,ProfileForm
+from .forms import SignupForm, ProfileForm, ProjectForm
 from django.contrib.auth.models import User
 
 # Create your views here.
+
+
 def signup(request):
     name = "Sign Up"
     if request.method == 'POST':
@@ -27,7 +29,8 @@ def signup(request):
         return redirect('post')
     else:
         form = SignUpForm()
-    return render(request, 'registration/registration_form.html', {'form': form, 'name':name})
+    return render(request, 'registration/registration_form.html', {'form': form, 'name': name})
+
 
 @login_required(login_url='/accounts/login/')
 def profile(request, id):
@@ -35,27 +38,28 @@ def profile(request, id):
   profile = Profile.objects.get(user=frank)
   user = request.user
   projects = Project.objects.filter(poster=frank).order_by('-pub_date')
-  projectcount=projects.count()
-  return render(request, 'profile/profile.html',{'profile':profile,'user':user,'projectcount':projectcount,'projects':projects})
+  projectcount = projects.count()
+  return render(request, 'profile/profile.html', {'profile': profile, 'user': user, 'projectcount': projectcount, 'projects': projects})
+
 
 @login_required(login_url='/accounts/login/')
 def newprofile(request):
   frank = request.user.id
   profile = Profile.objects.get(user=frank)
-  
-  
+
   if request.method == 'POST':
     instance = get_object_or_404(Profile, user=user)
-    form = ProfileForm(request.POST, request.FILES,instance=instance)
+    form = ProfileForm(request.POST, request.FILES, instance=instance)
     if form.is_valid():
       form.save()
     return redirect('profile', user)
 
   else:
-    
+
     form = ProfileForm()
 
-  return render(request, 'profile/newprofile.html',{'form':form,'profile':profile})
+  return render(request, 'profile/newprofile.html', {'form': form, 'profile': profile})
+
 
 @login_required(login_url='/accounts/login/')
 def myprojects(request):
@@ -64,40 +68,28 @@ def myprojects(request):
 
   projects = Project.objects.all().order_by('-pub_date')
 
-  return render(request, 'project/myprojects.html',{'projects':projects,'profile':profile})
+  return render(request, 'project/myprojects.html', {'projects': projects, 'profile': profile})
+
 
 @login_required(login_url='/accounts/login/')
 def home(request):
   id = request.user.id
   profile = Profile.objects.get(user=id)
-  return render(request, 'index.html',{'profile':profile})
+  return render(request, 'index.html', {'profile': profile})
 
 
 @login_required(login_url='/accounts/login/')
-def search(request):
-  user = request.user.id
-  profile = Profile.objects.get(user=user)
+def search_results(request):
+    current_user = request.user
+    profile = Profile.objects.get(username=current_user)
+    if 'project' in request.GET and request.GET["project"]:
+        search_term = request.GET.get("project")
+        searched_projects = Project.search_project(search_term)
+        message = f"{search_term}"
 
+        print(searched_projects)
 
-  if 'project' in request.GET and request.GET['project']:
-    search_term = request.GET.get('project')
-    message = f'{search_term}'
-    title = 'Search Results'
-
-    try:
-      no_ws = search_term.strip()
-      searched_projects = Project.objects.filter(title__icontains = no_ws)
-
-    except ObjectDoesNotExist:
-      searched_projects = []
-
-    return render(request, 'search.html',{'message':message ,'title':title, 'searched_projects':searched_projects,'profile':profile})
-
-  else:
-    message = 'You havenot searched for any projects'
-    
-    title = 'Search Error'
-    return render(request,'search.html',{'message':message,'title':title,'profile':profile})
+    return render(request,'search.html',{"message":message,"projects":searched_projects,"profile":profile})
 
 @login_required(login_url='/accounts/login/')
 def project(request, id):
@@ -137,3 +129,10 @@ def newproject(request):
   else:
     form = ProjectForm()
   return render(request, 'project/newproject.html',{'form':form,'profile':profile})
+
+@login_required(login_url='/accounts/login/')
+def password(request):
+  id = request.user.id
+  profile = Profile.objects.get(user=id)
+  return render(request, 'password.html',{'profile':profile})
+

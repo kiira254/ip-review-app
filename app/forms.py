@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile,Project 
 
 class SignupForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
@@ -21,4 +21,7 @@ class ProfileForm(forms.ModelForm):
     model = Profile
     exclude = ['user']
 
-  
+class ProjectForm(forms.ModelForm):
+  class Meta:
+    model = Project
+    exclude = ['poster','postername', 'pub_date']
