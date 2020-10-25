@@ -61,3 +61,31 @@ def home(request):
     
     
     return render(request, 'index.html')
+
+
+@login_required(login_url='/accounts/login/')
+def search(request):
+  user = request.user.id
+  profile = Profile.objects.get(user=user)
+
+
+  if 'project' in request.GET and request.GET['project']:
+    search_term = request.GET.get('project')
+    message = f'{search_term}'
+    title = 'Search Results'
+
+    try:
+      no_ws = search_term.strip()
+      searched_projects = Project.objects.filter(title__icontains = no_ws)
+
+    except ObjectDoesNotExist:
+      searched_projects = []
+
+    return render(request, 'search.html',{'message':message ,'title':title, 'searched_projects':searched_projects,'profile':profile})
+
+  else:
+    message = 'You havenot searched for any projects'
+    
+    title = 'Search Error'
+    return render(request,'search.html',{'message':message,'title':title,'profile':profile})
+

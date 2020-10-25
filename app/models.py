@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 
 # Create your models here.
 
-class Projects(models.Model):
+class Project(models.Model):
   title = models.CharField(max_length=60)
   image = models.ImageField(upload_to = 'photos/')
   description = models.TextField()
