@@ -26,15 +26,19 @@
       <p></p>
 {% if projects %}
 {% for project in projects %}
-<div class="card bg-dark text-white">
-    <img class='streamimg' src="{{project.image.url}}" alt="{{ project.title }}">
-    <div class="card-img-overlay">
-      <h5 class="card-title firstletter">{{project.title}}</h5>
-      <p class="card-text firstletter">{{ project.description | truncatechars:450 }}</p>
-      <p class="card-text"><a href="{% url 'project' project.id %}"><button type="button" class="btn-success">View</button></a></p>
+  <div class="row">
+    <div class="jumbotron">
+      <div class="col-md-04">
+            <img style="width: 500px; " src="{{project.image.url}}" alt="{{ project.title }}">
+          
+              <h2 class="card-title firstletter">{{project.title}}</h2>
+              <h4 class="card-text firstletter">{{ project.description | truncatechars:450 }}</h4>
+              <h5 class="card-text"><a href="{% url 'project' project.id %}"><button type="button" class="btn-dark" style="width: 10%;">View</button></a></h5>
+            
+      </div>
     </div>
+        <br>
   </div>
-  <br>
 {% endfor %}
 {% else %}
 <h4>No projects to show, Add one <a href="{% url 'newproject' %}">here</a>.</h4>

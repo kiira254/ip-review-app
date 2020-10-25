@@ -1,7 +1,7 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 import datetime as dt
-from .models import Profile
+from .models import Profile, Project
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from .forms import SignupForm, ProfileForm, ProjectForm
@@ -33,7 +33,7 @@ def signup(request):
 
 
 @login_required(login_url='/accounts/login/')
-def profile(request, id):
+def profile(request):
   frank = request.user.id
   profile = Profile.objects.get(user=frank)
   user = request.user
