@@ -7,8 +7,8 @@ from django.db.models.signals import post_save
 class Profile(models.Model):
   profile_photo = models.ImageField(upload_to = 'photos/')
   bio = models.CharField(max_length=200)
-  contact = models.EmailField()
-  user = models.OneToOneField(User, on_delete=models.CASCADE)
+  contact = models.EmailField(blank=True)
+  user = models.OneToOneField( User, on_delete=models.CASCADE, blank=True)
 
   @receiver(post_save, sender=User)
   def create_user_profile(sender, instance, created, **kwargs):
