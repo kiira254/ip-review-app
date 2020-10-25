@@ -4,6 +4,27 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
 # Create your models here.
+
+class Projects(models.Model):
+  title = models.CharField(max_length=60)
+  image = models.ImageField(upload_to = 'photos/')
+  description = models.TextField()
+  link = models.CharField(max_length=100)
+  poster = models.ForeignKey(User,on_delete=models.CASCADE)
+  postername = models.CharField(max_length=60)
+  pub_date = models.DateTimeField(auto_now_add=True)
+
+  def __str__(self):
+    return self.title
+  class Meta:
+    ordering = ['title']
+
+  def save_project(self):
+    self.save()
+
+  def delete_project(self):
+    self.delete()
+
 class Profile(models.Model):
   profile_photo = models.ImageField(upload_to = 'photos/')
   bio = models.CharField(max_length=200)
@@ -26,3 +47,4 @@ class Profile(models.Model):
 
   def delete_profile(self):
     self.delete()
+
