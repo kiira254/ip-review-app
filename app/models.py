@@ -1,10 +1,11 @@
 from django.db import models
 from django.dispatch import receiver
-
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 # Create your models here.
 class Profile(models.Model):
-  Profile_photo = models.ImageField(upload_to = 'photos/')
+  profile_photo = models.ImageField(upload_to = 'photos/')
   bio = models.CharField(max_length=200)
   contact = models.EmailField()
   user = models.OneToOneField(User, on_delete=models.CASCADE)
