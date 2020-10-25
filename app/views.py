@@ -89,3 +89,21 @@ def search(request):
     title = 'Search Error'
     return render(request,'search.html',{'message':message,'title':title,'profile':profile})
 
+@login_required(login_url='/accounts/login/')
+def project(request, id):
+  user = request.user.id
+  profile = Profile.objects.get(user=user)
+  project = Project.objects.get(pk=id)
+  ratings = Rating.objects.filter(project=id)
+
+  
+  project = Project.objects.get(pk=id)
+
+  a = Rating.objects.filter(project=id).aggregate(Avg('design'))
+  b = Rating.objects.filter(project=id).aggregate(Avg('usability'))
+  c = Rating.objects.filter(project=id).aggregate(Avg('content'))
+  d = Rating.objects.filter(project=id).aggregate(Avg('average'))
+  
+
+
+  return render(request, 'photos/project.html',{'profile':profile,'project':project,'ratings':ratings,'a':a,'b':b,'c':c,'d':d})
