@@ -43,14 +43,12 @@
         </div>
     </div>
 <div class="container">
-
+{% for project in projects %}
+<div class="jumbotron">
     <div class="col-md-4 mx-auto">
         <h2 class="firstletter">{{project.title}}</h2>
     </div>
   <hr>
-  <div class="col-md-4 mx-auto">
-      <img class='soloimg' src="{{project.image.url}}" alt="{{ project.title }}">
-    <div class="card-body">
       <h5 class="card-title firstletter">{{project.title}}</h5>
       <p class="card-text">
         <p>{{project.description}}</p>
@@ -65,7 +63,8 @@
   <br>
   <br>
 
-
+</div>
+{% endfor %}
   <h5 style="text-align:center;text-decoration:underline">User Ratings</h5>
   {% if ratings%}
     <div class="row">
