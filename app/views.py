@@ -76,13 +76,13 @@ def myprojects(request):
   return render(request, 'project/myprojects.html', {'projects': projects, 'profile': profile})
 
 
-@login_required(login_url='/accounts/login/')
-def home(request):
+# @login_required(login_url='/accounts/login/')
+# def home(request):
 
-  id = request.user.id
-  profile = Profile.objects.get(user=id)
-  
-  return render(request, 'index.html', {'profile': profile})
+#   id = request.user.id
+#   profile = Profile.objects.get(user=id)
+#   project=Project.save_project()
+#   return render(request, 'index.html', {'profile': profile, project:'project'})
 
 
 @login_required(login_url='/accounts/login/')
@@ -99,23 +99,24 @@ def search_results(request):
     return render(request,'search.html',{"message":message,"projects":searched_projects,"profile":profile})
 
 @login_required(login_url='/accounts/login/')
-def project(request, id):
+def home (request):
+  id = request.user.id
   user = request.user.id
   profile = Profile.objects.get(user=user)
   project = Project.objects.get(pk=id)
-  ratings = Rating.objects.filter(project=id)
+  # ratings = Rating.objects.filter(project=id)
 
   
-  project = Project.objects.get(pk=id)
+  # project = Project.objects.get(pk=id)
 
-  a = Rating.objects.filter(project=id).aggregate(Avg('design'))
-  b = Rating.objects.filter(project=id).aggregate(Avg('usability'))
-  c = Rating.objects.filter(project=id).aggregate(Avg('content'))
-  d = Rating.objects.filter(project=id).aggregate(Avg('average'))
+  # a = Rating.objects.filter(project=id).aggregate(Avg('design'))
+  # b = Rating.objects.filter(project=id).aggregate(Avg('usability'))
+  # c = Rating.objects.filter(project=id).aggregate(Avg('content'))
+  # d = Rating.objects.filter(project=id).aggregate(Avg('average'))
   
 
 
-  return render(request, 'project/project.html',{'profile':profile,'project':project,'ratings':ratings,'a':a,'b':b,'c':c,'d':d})
+  return render(request, 'index.html',{'profile':profile,'project':project})
 
 @login_required(login_url='/accounts/login/')
 def newproject(request):
