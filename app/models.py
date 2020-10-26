@@ -29,7 +29,7 @@ class Profile(models.Model):
   profile_photo = models.ImageField(upload_to = 'photos/')
   bio = models.CharField(max_length=200)
   contact = models.EmailField(blank=True)
-  user = models.OneToOneField( User, on_delete=models.CASCADE, blank=True)
+  user = models.OneToOneField( User, on_delete=models.CASCADE)
 
   @receiver(post_save, sender=User)
   def create_user_profile(sender, instance, created, **kwargs):
@@ -48,3 +48,21 @@ class Profile(models.Model):
   def delete_profile(self):
     self.delete()
 
+
+class Rating(models.Model):
+  CHOICES = [(i,i) for i in range(10)]
+  design = models.IntegerField(choices=CHOICES)
+  usability = models.IntegerField(choices=CHOICES)
+  content = models.IntegerField(choices=CHOICES)
+  average = models.IntegerField()
+  project = models.ForeignKey(Project, on_delete=models.CASCADE)
+  postername = models.CharField(max_length=60)
+  pub_date = models.DateTimeField(auto_now_add=True)
+
+  
+
+  def save_rating(self):
+    self.save()
+
+  def delete_rating(self):
+    self.delete()
