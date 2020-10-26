@@ -53,7 +53,12 @@ def profile(request):
 def newprofile(request,):
   id = request.user.id
   profile = Profile.objects.get(user=id)
-  
+  frank = request.user.id
+  profile = Profile.objects.get(user=frank)
+  user = request.user
+  projects = Project.objects.filter(poster=frank).order_by('-pub_date')
+  projectcount = projects.count()
+
   if request.method == 'POST':
     instance = get_object_or_404(Profile, user=id)
     form = ProfileForm(request.POST, request.FILES,instance=instance)
@@ -64,7 +69,7 @@ def newprofile(request,):
   else:
     form = ProfileForm()
 
-  return render(request, 'profile/new_profile.html',{'form':form,'profile':profile})
+  return render(request, 'profile/new_profile.html',{'form':form,'profile':profile, 'user': user, 'projectcount': projectcount, 'projects': projects})
 
 @login_required(login_url='/accounts/login/')
 def myprojects(request):
