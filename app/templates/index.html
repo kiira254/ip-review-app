@@ -42,56 +42,66 @@
             </div>
         </div>
     </div>
-<div class="container">
-{% for project in projects %}
-<div class="jumbotron">
-    <div class="col-md-4 mx-auto">
-        <h2 class="firstletter">{{project.title}}</h2>
-    </div>
-  <hr>
-      <h5 class="card-title firstletter">{{project.title}}</h5>
-      <p class="card-text">
-        <p>{{project.description}}</p>
-      </p>
-      <p class="card-text" style="color: whitesmoke">Project by: {{project.postername}}</p>
-    </div>
-  </div>
-  <div class="card-letter" style="text-align:center">
-      <a target="_blank" href="{{ project.link }}"><button type="button" class="btn btn-md" style="background-color:#33705c;">View Site</button></a>  
-      <a href="{% url 'site' project.id %}"><button type="button" class="btn btn-md" style="background-color:#33705c;">Rate</button></a>
-  </div>
-  <br>
-  <br>
+    <div class="container">
+        <div class="jumbotron" style="color: rgb(71, 71, 71); background-color: rgb(29, 26, 26);">
+            <div class="col-md-4 mx-auto">
+                <h2 class="firstletter">{{project.title}}</h2>
+            </div>
+            <hr>
+            <div class="col-md-4 mx-auto">
+                <img class='soloimg' src="{{project.image.url}}" alt="{{ project.title }}">
+                <div class="card-body">
+                    <h3 class="card-title firstletter">{{project.title}}</h3>
+                    <p class="card-text">
+                    <p> {{project.description}}</p>
+                    </p>
+                    <p class="card-text" style="color: rgb(100, 92, 92)">Project by: {{project.postername}}</p>
+                </div>
+            </div>
+            <div class="card-letter" style="text-align:center">
+                <a target="_blank" href="{{ project.link }}"><button type="button" class="btn btn-md"
+                        style="background-color:#33705c;">View Site</button></a>
+                <a href="{% url 'site' project.id %}"><button type="button" class="btn btn-md"
+                        style="background-color:#33705c;">Rate</button></a>
+            </div>
+            <br>
+            <br>
 
-</div>
-{% endfor %}
-  <h5 style="text-align:center;text-decoration:underline">User Ratings</h5>
-  {% if ratings%}
-    <div class="row">
-      {% for rating in ratings %}
-      <div class="col-md-4">
-  <div class="card text-white bg-dark mb-3">
-      <div class="card-body firstletter" >
-          <p>Design: {{rating.design}}</p>
-          <p>Usability: {{rating.usability}}</p>
-          <p>Content: {{rating.content}}</p>
-          <p></p>
-          <p>Average: {{rating.average}}</p>
-        <footer class="blockquote-footer" style="color:white;"><cite title="Source Title">Rated By: {{rating.postername}}</cite></footer>
-      </div>
+        
+            <h5 style="text-align:center;text-decoration:underline">User Ratings</h5>
+            {% if ratings%}
+            <div class="row">
+                {% for rating in ratings %}
+                <div class="col-md-4">
+                    <div class="card text-white bg-dark mb-3">
+                        <div class="card-body firstletter">
+                            <p>Design: {{rating.design}}</p>
+                            <p>Usability: {{rating.usability}}</p>
+                            <p>Content: {{rating.content}}</p>
+                            <p></p>
+                            <p>Average: {{rating.average}}</p>
+                            <footer class="blockquote-footer" style="color:white;"><cite title="Source Title">Rated By:
+                                    {{rating.postername}}</cite></footer>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <h4 style="text-align:center"> No Ratings Upto Now</h4>
+            {% endif %}
+        </div>
     </div>
-</div>
-  {% endfor %}
-</div>
-  {% else %}
-  <h4 style="text-align:center"> No Ratings Upto Now</h4>
-  {% endif %}
-  </div>
-<style>
-.btn btn-primary{
-  text-align: center;
-  margin-right: 50%;
-}
-</style>
-{% endblock %}
+    <style>
+        .btn btn-primary {
+            text-align: center;
+            margin-right: 50%;
+        }
+        body{
+            background-image: url(https://cdn.wallpapersafari.com/9/30/WNC7JO.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
 
+            }
+    </style>
+    {% endblock %}

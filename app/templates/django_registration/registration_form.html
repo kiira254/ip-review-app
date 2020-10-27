@@ -8,7 +8,7 @@
     <div class="col-md-4"></div>
     <div class="col-md-4">
       {% if form.errors %}
-        <p> Some Information Might be Incorrect </p>
+      <p> Some Information Might be Incorrect </p>
       {% endif %}
       <div class="panel panel-default">
 
@@ -17,7 +17,7 @@
         </div>
         <div class="panel-body">
 
-          <form  action="/accounts/register/" method="post">
+          <form action="/accounts/register/" method="post">
             {% csrf_token %}
             {% bootstrap_form form %}
             <div class="form-group">
@@ -37,5 +37,13 @@
     <div class="col-md-4"></div>
   </div>
 </div>
+</div>
+<style>
+  body {
+    background-image: url(https://cdn.wallpapersafari.com/9/30/WNC7JO.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 
+  }
+</style>
 {% endblock %}

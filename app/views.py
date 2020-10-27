@@ -121,7 +121,7 @@ def home (request):
   
 
 
-  return render(request, 'index.html',{'profile':profile,'project':project})
+  return render(request, 'index.html',{'profile':profile,'project':project })
 
 @login_required(login_url='/accounts/login/')
 def newproject(request):

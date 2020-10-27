@@ -1,4 +1,4 @@
-{% load bootstrap4 %} 
+{% load bootstrap4 %}
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -10,33 +10,40 @@
   <title>New Project</title>
   {{form.media}}
 
-{% block styles %} 
-{% bootstrap_css %}
+  {% block styles %}
+  {% bootstrap_css %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}"> {% endblock %}
 
 </head>
 
 <body>
   {% include 'navbar.html' %}
-<div class="container" style="background-color: rgb(71, 67, 67);">      
+  <div class="container" style="background-color: rgb(71, 67, 67);">
     <div class="jumbotron" style='background-color: rgb(44, 42, 42); color: rgb(129, 124, 124);'>
-            <div class="intro">
-                <h2>New Project</h2>
-            </div>
-        <hr>
-        <form  action="{%url 'newproject'%}" method="post" enctype="multipart/form-data">
-            {%csrf_token%}
+      <div class="intro">
+        <h2>New Project</h2>
+      </div>
+      <hr>
+      <form action="{%url 'newproject'%}" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
 
-            {% bootstrap_form form%}
-            <input type="submit" class="btn btn-success btn-lg" value="Add Project">
-        </form>
+        {% bootstrap_form form%}
+        <input type="submit" class="btn btn-success btn-lg" value="Add Project">
+      </form>
     </div>
+    <style>
+      body {
+        background-image: url(https://cdn.wallpapersafari.com/9/30/WNC7JO.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
 
-  {% block scripts %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  {% bootstrap_javascript %}
-   {% endblock %}
-</div>
+      }
+    </style>
+    {% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {% bootstrap_javascript %}
+    {% endblock %}
+  </div>
 </body>
 
 </html>
